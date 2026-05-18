@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    container_name: smart-expense-splitter-db
+    environment:
+      POSTGRES_DB: smart_splitter
+      POSTGRES_USER: splitter
+      POSTGRES_PASSWORD: splitter
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U splitter -d smart_splitter"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
